@@ -1,6 +1,6 @@
 import React from 'react'
-import styled from 'styled-components';
-import metube from "../img/logo.png"
+import styled from "styled-components";
+import metube from "../img/logo.png";
 import HomeIcon from '@mui/icons-material/Home';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import SubscriptionsOutlinedIcon from '@mui/icons-material/SubscriptionsOutlined';
@@ -21,9 +21,9 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 //styled components
 const Container = styled.div`
 flex: 1;
-background-color: #202020;
+background-color: ${({ theme }) => theme.bg};
 /* height: 100vh; */
-color: white;
+color:  ${({ theme }) => theme.text};
 font-size: 14px;
 position: sticky;
 top: 0;
@@ -50,7 +50,7 @@ padding: 7.5px 0px;
 `
 const Hr = styled.hr`
 margin: 15px 0px;
-border: 0.5px solid #373737;
+border: 0.5px solid  ${({ theme }) => theme.soft};
 
 `
 const Login = styled.div`
@@ -69,9 +69,17 @@ display: flex;
 align-items: center;
 gap: 5px;
 `
+const Title = styled.h2`
+font-size: 14px;
+font-weight: 500;
+color: #aaaaaa;
+margin-bottom: 20px;
+`
 
-export const Menu = () => {
+export const Menu = ({ darkMode, setDarkMode }) => {
+
     return (
+
         <Container>
             <Wrapper>
                 <Logo>
@@ -100,6 +108,7 @@ export const Menu = () => {
                     <Button><PersonOutlineOutlinedIcon /> SIGN IN</Button>
                 </Login>
                 <Hr />
+                <Title>Best of MeTube</Title>
                 <Item>
                     <LibraryMusicOutlinedIcon /> Music
                 </Item>
@@ -128,7 +137,7 @@ export const Menu = () => {
                 <Item>
                     <HelpOutlineOutlinedIcon /> Help
                 </Item>
-                <Item>
+                <Item onClick={() => setDarkMode(!darkMode)}>
                     <LightModeOutlinedIcon /> Light Mode
                 </Item>
             </Wrapper>
