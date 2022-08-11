@@ -20,7 +20,7 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 
 //styled components
 const Container = styled.div`
-flex: 1;
+flex: 1.2;
 background-color: ${({ theme }) => theme.bg};
 /* height: 100vh; */
 color:  ${({ theme }) => theme.text};
