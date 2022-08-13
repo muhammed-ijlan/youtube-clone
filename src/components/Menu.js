@@ -141,7 +141,7 @@ export const Menu = ({ darkMode, setDarkMode }) => {
                     <HelpOutlineOutlinedIcon /> Help
                 </Item>
                 <Item onClick={() => setDarkMode(!darkMode)}>
-                    <LightModeOutlinedIcon /> Light Mode
+                    <LightModeOutlinedIcon /> {darkMode ? "Light" : "Dark"} Mode
                 </Item>
             </Wrapper>
         </Container>
