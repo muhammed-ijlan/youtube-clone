@@ -3,6 +3,13 @@ import styled, { ThemeProvider } from "styled-components"
 import { Menu } from "./components/Menu";
 import Navbar from "./components/Navbar";
 import { darkTheme, lightTheme } from './utils/Theme';
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+} from "react-router-dom";
+import Home from "./pages/Home";
+import Video from "./pages/Video";
 
 // styled components
 const Container = styled.div`
@@ -22,18 +29,24 @@ function App() {
 
     return <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <Container>
-            <Menu setDarkMode={setDarkMode} darkMode={darkMode} />
+            <BrowserRouter>
 
-            <Main>
-                <Navbar />
-                <Wrapper >
-                    Video cards
-                    Video cards
-                    Video cards
-                    Video cards
-                    Video cards
-                </Wrapper>
-            </Main>
+                <Menu setDarkMode={setDarkMode} darkMode={darkMode} />
+
+                <Main>
+                    <Navbar />
+                    <Wrapper >
+                        <Routes>
+                            <Route path="/">
+                                <Route index element={<Home />} />
+                                <Route path="video">
+                                    <Route path=":id" element={<Video />} />
+                                </Route>
+                            </Route>
+                        </Routes>
+                    </Wrapper>
+                </Main>
+            </BrowserRouter>
         </Container>
     </ThemeProvider>
 }

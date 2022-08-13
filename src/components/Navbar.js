@@ -54,15 +54,15 @@ const Button = styled.button`
 `;
 
 export default function Navbar() {
-    return (
-        <Container>
-            <Wrapper>
-                <Search>
-                    <Input placeholder='Search' />
-                    <SearchOutlined />
-                </Search>
-                <Button><PersonOutlineOutlinedIcon /> SIGN IN</Button>
-            </Wrapper>
-        </Container>
-    )
+  return (
+    <Container>
+      <Wrapper>
+        <Search>
+          <Input placeholder='Search' />
+          <SearchOutlined />
+        </Search>
+        <Button><PersonOutlineOutlinedIcon /> SIGN IN</Button>
+      </Wrapper>
+    </Container>
+  )
 }
