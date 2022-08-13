@@ -5,6 +5,7 @@ import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 
 import React from "react";
 import styled from "styled-components";
+import Comments from "../components/Comments";
 
 const Container = styled.div`
   display: flex;
@@ -164,6 +165,8 @@ function Video() {
                     </ChannelInfo>
                     <Subscribe>SUBSCRIBE</Subscribe>
                 </Channel>
+                <Hr />
+                <Comments />
             </Content>
             <Recomended>Recomended</Recomended>
         </Container>
