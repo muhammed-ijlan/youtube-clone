@@ -19,9 +19,10 @@ const Input = styled.input`
 width: 100%;
 border: none;
 outline: none;
-border-bottom: 1px solid ${({ theme }) => theme.soft}; ;
+border-bottom: 1px solid ${({ theme }) => theme.soft}; 
 background-color:transparent;
 padding: 5px;
+ color: ${({ theme }) => theme.text};;
 `
 
 function Comments() {
