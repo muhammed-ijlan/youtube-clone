@@ -6,6 +6,7 @@ import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import React from "react";
 import styled from "styled-components";
 import Comments from "../components/Comments";
+import Card from './../components/Card';
 
 const Container = styled.div`
   display: flex;
@@ -168,7 +169,22 @@ function Video() {
                 <Hr />
                 <Comments />
             </Content>
-            <Recomended>Recomended</Recomended>
+            <Recomended>
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+            </Recomended>
         </Container>
     );
 }
