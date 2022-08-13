@@ -17,6 +17,7 @@ import OutlinedFlagOutlinedIcon from '@mui/icons-material/OutlinedFlagOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import { Link } from 'react-router-dom';
 
 //styled components
 const Container = styled.div`
@@ -82,9 +83,11 @@ export const Menu = ({ darkMode, setDarkMode }) => {
 
         <Container>
             <Wrapper>
-                <Logo>
-                    <Img src={metube} />MeTube
-                </Logo>
+                <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+                    <Logo>
+                        <Img src={metube} />MeTube
+                    </Logo>
+                </Link>
                 <Item>
                     <HomeIcon /> Home
                 </Item>
