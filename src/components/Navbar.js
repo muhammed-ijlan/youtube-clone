@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { SearchOutlined } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   position: sticky;
@@ -38,6 +39,7 @@ const Input = styled.input`
   background-color: transparent;
   outline: none;
   color: ${({ theme }) => theme.text};
+  width: 100%;
 `;
 
 const Button = styled.button`
@@ -61,7 +63,9 @@ export default function Navbar() {
           <Input placeholder='Search' />
           <SearchOutlined />
         </Search>
-        <Button><PersonOutlineOutlinedIcon /> SIGN IN</Button>
+        <Link to="signin" style={{ textDecoration: "none" }}>
+          <Button><PersonOutlineOutlinedIcon /> SIGN IN</Button>
+        </Link>
       </Wrapper>
     </Container>
   )

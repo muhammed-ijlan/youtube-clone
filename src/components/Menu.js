@@ -111,7 +111,9 @@ export const Menu = ({ darkMode, setDarkMode }) => {
                 <Hr />
                 <Login>
                     Signin to Like the video, Comment, and subscribe.
-                    <Button><PersonOutlineOutlinedIcon /> SIGN IN</Button>
+                    <Link to="signin" style={{ textDecoration: "none" }}>
+                        <Button><PersonOutlineOutlinedIcon /> SIGN IN</Button>
+                    </Link>
                 </Login>
                 <Hr />
                 <Title>Best of MeTube</Title>

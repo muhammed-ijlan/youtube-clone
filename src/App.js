@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home";
 import Video from "./pages/Video";
+import Login from "./pages/Login";
 
 // styled components
 const Container = styled.div`
@@ -39,6 +40,7 @@ function App() {
                         <Routes>
                             <Route path="/">
                                 <Route index element={<Home />} />
+                                <Route path="signin" element={<Login />} />
                                 <Route path="video">
                                     <Route path=":id" element={<Video />} />
                                 </Route>
