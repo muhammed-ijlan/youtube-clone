@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv"
 
 import userRoutes from "./routes/users.js"
+import commentRoutes from "./routes/comments.js"
+import videoRoutes from "./routes/videos.js"
+import authRoutes from "./routes/auth.js"
 
 const app = express()
 dotenv.config()
@@ -17,6 +20,9 @@ const connect = () => {
 }
 
 app.use("/api/users", userRoutes)
+app.use("/api/video", videoRoutes)
+app.use("/api/comments", commentRoutes)
+app.use("/api/auth", authRoutes)
 
 
 //PORT LISTEN
