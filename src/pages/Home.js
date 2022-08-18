@@ -9,13 +9,13 @@ justify-content: space-between;
 flex-wrap: wrap;
 `
 
-function Home() {
+function Home({ type }) {
     const [videos, setVideos] = useState([])
 
     useEffect(() => {
         try {
             const fetchVideo = async () => {
-                const res = await axios.get("http://localhost:8800/api/video/random")
+                const res = await axios.get(`http://localhost:8800/api/video/${type}`)
 
                 setVideos(res.data)
             }
@@ -23,16 +23,14 @@ function Home() {
         } catch (err) {
             console.log(err);
         }
-
-
-    }, [])
+    }, [type])
 
     console.log(videos);
 
     return (
         <Container>
             {videos.map(video => (
-                <Card key={Math.random()} />
+                <Card key={video._id} video={video} />
             ))}
         </Container>
     )

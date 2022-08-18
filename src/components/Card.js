@@ -1,6 +1,8 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { format } from "timeago.js"
 
 const Container = styled.div`
     width: ${(props) => props.type !== "sm" && "360px"};
@@ -45,18 +47,27 @@ font-size: 14px;
 color:  ${({ theme }) => theme.textSoft};
 `
 
-function Card({ type }) {
+function Card({ type, video }) {
+    const [channel, setChannel] = useState([])
+
+    useEffect(() => {
+        const fetchChannel = async () => {
+            const res = await axios.get(`http://localhost:8800/api/users/find/${video.userId}`)
+            setChannel(res.data)
+        }
+        fetchChannel();
+    }, [video.userId])
+
     return (
         <Link to='/video/test' style={{ textDecoration: "none" }}>
             <Container type={type}>
-                <Image type={type} src='https://www.adobe.com/express/create/thumbnail/media_1dbde0324d7a246981b97c7efc38d56176d359e3f.jpeg?width=400&format=jpeg&optimize=medium' />
+                <Image type={type} src={video.imgUrl} alt="no image" />
                 <Details type={type}>
-                    <ChannelImg type={type} src='https://images-platform.99static.com/axc2wMV9jfMSAgUgTfZvbgvW1cM=/186x1744:814x2372/500x500/top/smart/99designs-contests-attachments/94/94866/attachment_94866426' />
+                    <ChannelImg type={type} src={channel.img} />
                     <Texts>
-                        <Title>Test Video</Title>
-                        <ChannelName>Lama Dev</ChannelName>
-                        <OtherInfo>29K views
-                            1 month ago</OtherInfo>
+                        <Title>{video.title}</Title>
+                        <ChannelName>{channel.name}</ChannelName>
+                        <OtherInfo>{video.views} views • {format(video.createdAt)}</OtherInfo>
                     </Texts>
                 </Details>
             </Container>

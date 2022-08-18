@@ -91,15 +91,21 @@ export const Menu = ({ darkMode, setDarkMode }) => {
                         <Img src={metube} />MeTube
                     </Logo>
                 </Link>
-                <Item>
-                    <HomeIcon /> Home
-                </Item>
-                <Item>
-                    <ExploreOutlinedIcon /> Explore
-                </Item>
-                <Item>
-                    <SubscriptionsOutlinedIcon /> Subscribe
-                </Item>
+                <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+                    <Item>
+                        <HomeIcon /> Home
+                    </Item>
+                </Link>
+                <Link to="trends" style={{ textDecoration: "none", color: "inherit" }}>
+                    <Item>
+                        <ExploreOutlinedIcon /> Explore
+                    </Item>
+                </Link>
+                <Link to="subscriptions" style={{ textDecoration: "none", color: "inherit" }}>
+                    <Item>
+                        <SubscriptionsOutlinedIcon /> Subscribe
+                    </Item>
+                </Link>
                 <Hr />
                 <Item>
                     <HistoryOutlinedIcon /> History
