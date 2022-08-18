@@ -18,6 +18,7 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 //styled components
 const Container = styled.div`
@@ -81,10 +82,10 @@ margin-bottom: 20px;
 `
 
 export const Menu = ({ darkMode, setDarkMode }) => {
+    const currentUser = useSelector(state => state.user.currentUser)
 
     return (
-
-        <Container>
+        <Container >
             <Wrapper>
                 <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
                     <Logo>
@@ -115,13 +116,15 @@ export const Menu = ({ darkMode, setDarkMode }) => {
                     <LibraryAddCheckOutlinedIcon /> Library
                 </Item>
                 <Hr />
-                <Login>
-                    Signin to Like the video, Comment, and subscribe.
-                    <Link to="signin" style={{ textDecoration: "none" }}>
-                        <Button><PersonOutlineOutlinedIcon /> SIGN IN</Button>
-                    </Link>
-                </Login>
-                <Hr />
+                {!currentUser && <>
+                    <Login>
+                        Signin to Like the video, Comment, and subscribe.
+                        <Link to="signin" style={{ textDecoration: "none" }}>
+                            <Button><PersonOutlineOutlinedIcon /> SIGN IN</Button>
+                        </Link>
+                    </Login>
+                    <Hr />
+                </>}
                 <Title>Best of MeTube</Title>
                 <Item>
                     <LibraryMusicOutlinedIcon /> Music
@@ -155,6 +158,6 @@ export const Menu = ({ darkMode, setDarkMode }) => {
                     <LightModeOutlinedIcon /> {darkMode ? "Light" : "Dark"} Mode
                 </Item>
             </Wrapper>
-        </Container>
+        </Container >
     )
 }
