@@ -36,7 +36,7 @@ const videoSchema = new mongoose.Schema({
     dislikes: {
         type: [String],
         default: []
-    },
+    }
 
 }, { timestamps: true })
 
