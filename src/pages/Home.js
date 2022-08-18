@@ -1,4 +1,5 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Card from '../components/Card'
 
@@ -9,23 +10,30 @@ flex-wrap: wrap;
 `
 
 function Home() {
+    const [videos, setVideos] = useState([])
+
+    useEffect(() => {
+        try {
+            const fetchVideo = async () => {
+                const res = await axios.get("http://localhost:8800/api/video/random")
+
+                setVideos(res.data)
+            }
+            fetchVideo()
+        } catch (err) {
+            console.log(err);
+        }
+
+
+    }, [])
+
+    console.log(videos);
+
     return (
         <Container>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {videos.map(video => (
+                <Card key={Math.random()} />
+            ))}
         </Container>
     )
 }
