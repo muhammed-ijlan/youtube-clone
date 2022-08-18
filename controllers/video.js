@@ -1,9 +1,10 @@
-import { createError } from "../error";
+import { createError } from "../error.js";
+import User from "../models/User.js";
 import Video from "../models/Video.js"
 
 // CREATE
 export const addVideo = async (req, res, next) => {
-    const newvideo = new Video({ userID: req.user.id, ...req.body })
+    const newvideo = new Video({ userId: req.user.id, ...req.body })
     try {
         const savedVideo = await newvideo.save();
         res.status(200).json(savedVideo)
@@ -61,11 +62,10 @@ export const getVideo = async (req, res, next) => {
 // ADD VIEWS
 export const addView = async (req, res, next) => {
     try {
-        const video = await Video.findById(req.params.id)
-        if (!video) return next(createError(404, "No video found"))
-
-
-        res.status(200).json(video)
+        await Video.findByIdAndUpdate(req.params.id, {
+            $inc: 1
+        })
+        res.status(200).json("The view has been increased")
     } catch (err) {
         next(err)
     }
@@ -74,11 +74,9 @@ export const addView = async (req, res, next) => {
 // RANDOM
 export const random = async (req, res, next) => {
     try {
-        const video = await Video.findById(req.params.id)
-        if (!video) return next(createError(404, "No video found"))
-
-
-        res.status(200).json(video)
+        const videos = await Video.aggregate([{ $sample: { size: 40 } }])
+        if (!videos) return next(createError(404, "No videos found"))
+        res.status(200).json(videos)
     } catch (err) {
         next(err)
     }
@@ -87,11 +85,10 @@ export const random = async (req, res, next) => {
 // TREND VIDEO
 export const trend = async (req, res, next) => {
     try {
-        const video = await Video.findById(req.params.id)
-        if (!video) return next(createError(404, "No video found"))
+        const videos = await Video.find().sort({ view: -1 })
+        if (!videos) return next(createError(404, "No videos found"))
 
-
-        res.status(200).json(video)
+        res.status(200).json(videos)
     } catch (err) {
         next(err)
     }
@@ -100,11 +97,42 @@ export const trend = async (req, res, next) => {
 // SUBSCRIBED VIDEO
 export const sub = async (req, res, next) => {
     try {
-        const video = await Video.findById(req.params.id)
-        if (!video) return next(createError(404, "No video found"))
+        const user = await User.findById(req.user.id)
+        const subscribedChannels = user.subscribedUsers;
 
+        const list = await Promise.all(
+            subscribedChannels.map(channelID => {
+                return Video.find({ userId: channelID })
+            })
+        )
 
-        res.status(200).json(video)
+        res.status(200).json(list.flat().sort((a, b) => a.createdAt - b.createdAt))
+    } catch (err) {
+        next(err)
+    }
+}
+
+// GET By TAGS
+export const getByTags = async (req, res, next) => {
+    try {
+        const tags = req.query.tags.split(",")
+        const videos = await Video.find({ tags: { $in: tags } }).limit(20)
+        if (!videos) return next(createError(404, "No videos found"))
+
+        res.status(200).json(videos)
+    } catch (err) {
+        next(err)
+    }
+}
+
+// SEARCH
+export const search = async (req, res, next) => {
+    try {
+        const query = req.query.q
+        const videos = await Video.find({ title: { $regex: query, $options: "i" } }).limit(20)
+        if (!videos) return next(createError(404, "No videos found"))
+
+        res.status(200).json(videos)
     } catch (err) {
         next(err)
     }
