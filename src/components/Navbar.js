@@ -83,7 +83,7 @@ export default function Navbar() {
         {currentUser ? (
           <User>
             <VideoCallIcon />
-            <Aavatar />
+            <Aavatar src={currentUser.img} />
             {currentUser.name}
           </User>
         ) : <Link to="signin" style={{ textDecoration: "none" }}>
