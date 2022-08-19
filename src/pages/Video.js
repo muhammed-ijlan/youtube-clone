@@ -108,6 +108,12 @@ cursor: pointer;
 padding: 10px 20px;
 `;
 
+const VideoFrame = styled.video`
+max-height: 720px;
+width: 100%;
+object-fit: cover;
+`
+
 function Video() {
 
   const { currentUser } = useSelector(state => state.user)
@@ -155,15 +161,7 @@ function Video() {
     <Container>
       <Content>
         <VideoWrapper>
-          <iframe
-            width="1000"
-            height="545"
-            src="https://www.youtube.com/embed/yIaXoop8gl4"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
+          <VideoFrame src={currentVideo.videoUrl} />
         </VideoWrapper>
         <Title>{currentVideo.title}</Title>
         <Details>
