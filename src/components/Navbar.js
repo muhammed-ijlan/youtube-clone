@@ -76,8 +76,7 @@ export default function Navbar() {
   const currentUser = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch()
 
-  const handleLogout = (e) => {
-    e.preventDefault();
+  const handleLogout = () => {
     dispatch(logout())
   }
 
@@ -90,7 +89,9 @@ export default function Navbar() {
         </Search>
         {currentUser ? (
           <User>
-            <Button type="logout" onClick={handleLogout}>Logout</Button>
+            <Link to="signin" style={{ textDecoration: "none" }}>
+              <Button type="logout" onClick={handleLogout}>Logout</Button>
+            </Link>
             <VideoCallIcon />
             <Aavatar src={currentUser.img} />
             {currentUser.name}

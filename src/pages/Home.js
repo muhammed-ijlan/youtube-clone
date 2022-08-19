@@ -26,8 +26,6 @@ function Home({ type }) {
         }
     }, [type])
 
-    console.log(videos);
-
     return (
         <Container>
             {videos.map(video => (
