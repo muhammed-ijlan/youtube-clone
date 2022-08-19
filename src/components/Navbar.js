@@ -1,10 +1,12 @@
-import React from 'react'
-import styled from 'styled-components'
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import { SearchOutlined } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import VideoCallIcon from '@mui/icons-material/VideoCall';
+import React from "react";
+import styled from "styled-components";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import { SearchOutlined } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import VideoCallIcon from "@mui/icons-material/VideoCall";
+import { logout } from "../redux/userSlice";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
 
 const Container = styled.div`
   position: sticky;
@@ -47,8 +49,8 @@ const Input = styled.input`
 const Button = styled.button`
   padding: 5px 15px;
   background-color: transparent;
-  border: 1px solid #3ea6ff;
-  color: #3ea6ff;
+  border: 1px solid ${(props) => props.type === "logout" && "red"};
+  color: ${(props) => props.type === "logout" && "red"};
   border-radius: 3px;
   font-weight: 500;
   cursor: pointer;
@@ -57,39 +59,50 @@ const Button = styled.button`
   gap: 5px;
 `;
 const User = styled.div`
-display: flex;
-align-items: center;
-gap: 10px;
-font-weight: 500;
-color: ${({ theme }) => theme.text}
-`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.text};
+`;
 const Aavatar = styled.img`
-width: 32px;
-height: 32px;
-border-radius: 50%;
-background-color: #999;
-`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #999;
+`;
 
 export default function Navbar() {
-  const currentUser = useSelector(state => state.user.currentUser);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch()
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(logout())
+  }
 
   return (
     <Container>
       <Wrapper>
         <Search>
-          <Input placeholder='Search' />
+          <Input placeholder="Search" />
           <SearchOutlined />
         </Search>
         {currentUser ? (
           <User>
+            <Button type="logout" onClick={handleLogout}>Logout</Button>
             <VideoCallIcon />
             <Aavatar src={currentUser.img} />
             {currentUser.name}
           </User>
-        ) : <Link to="signin" style={{ textDecoration: "none" }}>
-          <Button><PersonOutlineOutlinedIcon /> SIGN IN</Button>
-        </Link>}
+        ) : (
+          <Link to="signin" style={{ textDecoration: "none" }}>
+            <Button>
+              <PersonOutlineOutlinedIcon /> SIGN IN
+            </Button>
+          </Link>
+        )}
       </Wrapper>
     </Container>
-  )
+  );
 }
