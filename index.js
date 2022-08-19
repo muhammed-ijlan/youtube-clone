@@ -13,6 +13,7 @@ const app = express()
 app.use(cors())
 dotenv.config()
 app.use(express.json())
+app.use(cookieParser())
 
 
 //MONGOOSE CONNECTION
@@ -24,7 +25,7 @@ const connect = () => {
     })
 }
 
-app.use(cookieParser())
+
 
 app.use("/api/users", userRoutes)
 app.use("/api/video", videoRoutes)

@@ -38,9 +38,7 @@ export const signin = async (req, res, next) => {
 
         const { password, ...other } = user._doc
 
-        res.cookie("access_token", token, {
-            httpOnly: true
-        }).status(200).json(other)
+        res.cookie("access_token", token).status(200).json(other)
 
     } catch (err) {
         next(err)
