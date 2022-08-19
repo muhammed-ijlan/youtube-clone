@@ -1,44 +1,61 @@
-import React from 'react'
-import styled from 'styled-components'
-import Comment from './Comment'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
+import Comment from "./Comment";
 
-const Container = styled.div`
+const Container = styled.div``;
 
-`
 const NewComment = styled.div`
-display: flex;
-align-items: center;
-gap: 20px;
-`
-const Avatar = styled.img`
-width: 50px;
-height: 50px;
-border-radius: 50%;
-`
-const Input = styled.input`
-width: 100%;
-border: none;
-outline: none;
-border-bottom: 1px solid ${({ theme }) => theme.soft}; 
-background-color:transparent;
-padding: 5px;
- color: ${({ theme }) => theme.text};;
-`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
 
-function Comments() {
+const Avatar = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+`;
+
+const Input = styled.input`
+  border: none;
+  border-bottom: 1px solid ${({ theme }) => theme.soft};
+  color: ${({ theme }) => theme.text};
+  background-color: transparent;
+  outline: none;
+  padding: 5px;
+  width: 100%;
+`;
+
+const Comments = ({ videoId }) => {
+
+    const { currentUser } = useSelector((state) => state.user);
+
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+        const fetchComments = async () => {
+            try {
+                const res = await axios.get(`http://localhost:8800/api/comments/${videoId}`);
+                setComments(res.data);
+            } catch (err) { }
+        };
+        fetchComments();
+    }, [videoId]);
+
+
     return (
         <Container>
             <NewComment>
-                <Avatar src='https://cms-assets.tutsplus.com/cdn-cgi/image/width=850/uploads/users/1631/posts/35849/image/Screenshot%202020-09-19%20at%208.22.59%20pm%20copy.jpg' />
-
-                <Input placeholder='Add a comment...' />
+                <Avatar src={currentUser.img} />
+                <Input placeholder="Add a comment..." />
             </NewComment>
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
+            {comments.map(comment => (
+                <Comment key={comment._id} comment={comment} />
+            ))}
         </Container>
-    )
-}
+    );
+};
 
-export default Comments
+export default Comments;
