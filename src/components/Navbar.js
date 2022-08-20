@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { SearchOutlined } from "@mui/icons-material";
@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import VideoCallIcon from "@mui/icons-material/VideoCall";
 import { logout } from "../redux/userSlice";
 import { useDispatch } from "react-redux/es/hooks/useDispatch";
+import Upload from "./Upload";
 
 const Container = styled.div`
   position: sticky;
@@ -73,6 +74,7 @@ const Aavatar = styled.img`
 `;
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false)
   const currentUser = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch()
 
@@ -81,29 +83,33 @@ export default function Navbar() {
   }
 
   return (
-    <Container>
-      <Wrapper>
-        <Search>
-          <Input placeholder="Search" />
-          <SearchOutlined />
-        </Search>
-        {currentUser ? (
-          <User>
+
+    <>
+      <Container>
+        <Wrapper>
+          <Search>
+            <Input placeholder="Search" />
+            <SearchOutlined />
+          </Search>
+          {currentUser ? (
+            <User>
+              <Link to="signin" style={{ textDecoration: "none" }}>
+                <Button type="logout" onClick={handleLogout}>Logout</Button>
+              </Link>
+              <VideoCallIcon onClick={() => setOpen(true)} />
+              <Aavatar src={currentUser.img} />
+              {currentUser.name}
+            </User>
+          ) : (
             <Link to="signin" style={{ textDecoration: "none" }}>
-              <Button type="logout" onClick={handleLogout}>Logout</Button>
+              <Button>
+                <PersonOutlineOutlinedIcon /> SIGN IN
+              </Button>
             </Link>
-            <VideoCallIcon />
-            <Aavatar src={currentUser.img} />
-            {currentUser.name}
-          </User>
-        ) : (
-          <Link to="signin" style={{ textDecoration: "none" }}>
-            <Button>
-              <PersonOutlineOutlinedIcon /> SIGN IN
-            </Button>
-          </Link>
-        )}
-      </Wrapper>
-    </Container>
+          )}
+        </Wrapper>
+      </Container>
+      {open && <Upload setOpen={setOpen} />}
+    </>
   );
 }
