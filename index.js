@@ -10,9 +10,9 @@ import videoRoutes from "./routes/videos.js"
 import authRoutes from "./routes/auth.js"
 
 const app = express()
-app.use(cors())
 dotenv.config()
 app.use(express.json())
+app.use(cors())
 app.use(cookieParser())
 
 
@@ -25,10 +25,8 @@ const connect = () => {
     })
 }
 
-
-
 app.use("/api/users", userRoutes)
-app.use("/api/video", videoRoutes)
+app.use("/api/videos", videoRoutes)
 app.use("/api/comments", commentRoutes)
 app.use("/api/auth", authRoutes)
 
@@ -42,8 +40,9 @@ app.use((err, req, res, next) => {
     })
 })
 
+
 //PORT LISTEN
-app.listen(8800, () => {
+app.listen(5000, () => {
     connect();
     console.log("Server Connected!");
 }) 

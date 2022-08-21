@@ -1,8 +1,8 @@
-import mongoose from "mongoose"
+
 import bcrypt from "bcryptjs"
 import User from "../models/User.js"
 import { createError } from "../error.js";
-import Jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 // CREATE USER
 export const signup = async (req, res, next) => {
@@ -23,27 +23,28 @@ export const signup = async (req, res, next) => {
 // SIGNIN
 export const signin = async (req, res, next) => {
     try {
-        const user = await User.findOne({ name: req.body.name })
-        if (!user) {
-            return next(createError(404, "User not found!"))
-        }
+        const user = await User.findOne({ name: req.body.name });
+        if (!user) return next(createError(404, "User not found!"));
 
-        const isCorrect = await bcrypt.compare(req.body.password, user.password)
-        if (!isCorrect) {
-            return next(createError(400, "Wrong credentials!"))
-        }
+        const isCorrect = await bcrypt.compare(req.body.password, user.password);
 
-        // jwt token
-        const token = Jwt.sign({ id: user._id }, process.env.JWT)
+        if (!isCorrect) return next(createError(400, "Wrong Credentials!"));
+        console.log(user);
 
-        const { password, ...other } = user._doc
+        const token = jwt.sign({ id: user._id }, process.env.JWT);
 
-        res.cookie("access_token", token).status(200).json(other)
+        const { password, ...others } = user._doc;
 
+        res
+            .cookie("access_token", token, {
+                httpOnly: true,
+            })
+            .status(200)
+            .json(others);
     } catch (err) {
-        next(err)
+        next(err);
     }
-}
+};
 
 // Google Auth
 export const googleAuth = async (req, res, next) => {
@@ -51,7 +52,7 @@ export const googleAuth = async (req, res, next) => {
         const user = await User.findOne({ email: req.body.email })
 
         if (user) {
-            const token = Jwt.sign({ id: user._id }, process.env.JWT)
+            const token = jwt.sign({ id: user._id }, process.env.JWT)
 
             res.cookie("access_token", token, {
                 httpOnly: true
@@ -64,7 +65,7 @@ export const googleAuth = async (req, res, next) => {
 
             const savedUser = await newUser.save()
 
-            const token = Jwt.sign({ id: savedUser._id }, process.env.JWT)
+            const token = jwt.sign({ id: savedUser._id }, process.env.JWT)
 
             res.cookie("access_token", token, {
                 httpOnly: true
