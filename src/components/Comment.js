@@ -37,27 +37,27 @@ const Text = styled.span`
 `;
 
 const Comment = ({ comment }) => {
-    const [channel, setChannel] = useState({});
+  const [channel, setChannel] = useState({});
 
-    useEffect(() => {
-        const fetchComment = async () => {
-            const res = await axios.get(`http://localhost:8800/api/users/find/${comment.userId}`);
-            setChannel(res.data)
-        };
-        fetchComment();
-    }, [comment.userId]);
+  useEffect(() => {
+    const fetchComment = async () => {
+      const res = await axios.get(`http://localhost:8800/api/users/find/${comment.userId}`);
+      setChannel(res.data)
+    };
+    fetchComment();
+  }, [comment.userId]);
 
-    return (
-        <Container>
-            <Avatar src={channel.img} />
-            <Details>
-                <Name>
-                    {channel.name} <Date>1 day ago</Date>
-                </Name>
-                <Text>{comment.desc}</Text>
-            </Details>
-        </Container>
-    );
+  return (
+    <Container>
+      <Avatar src={channel.img} />
+      <Details>
+        <Name>
+          {channel.name} <Date>1 day ago</Date>
+        </Name>
+        <Text >{comment.desc}</Text>
+      </Details>
+    </Container>
+  );
 };
 
 export default Comment;
