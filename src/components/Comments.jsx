@@ -28,7 +28,7 @@ const Input = styled.input`
   width: 100%;
 `;
 
-const Comments = ({videoId}) => {
+const Comments = ({ videoId }) => {
 
   const { currentUser } = useSelector((state) => state.user);
 
@@ -37,9 +37,9 @@ const Comments = ({videoId}) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await axios.get(`/comments/${videoId}`);
+        const res = await axios.get(`https://yt-api-production.up.railway.app/api/comments/${videoId}`);
         setComments(res.data);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchComments();
   }, [videoId]);
@@ -52,8 +52,8 @@ const Comments = ({videoId}) => {
         <Avatar src={currentUser.img} />
         <Input placeholder="Add a comment..." />
       </NewComment>
-      {comments.map(comment=>(
-        <Comment key={comment._id} comment={comment}/>
+      {comments.map(comment => (
+        <Comment key={comment._id} comment={comment} />
       ))}
     </Container>
   );

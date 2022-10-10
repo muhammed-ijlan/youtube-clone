@@ -114,7 +114,7 @@ const Upload = ({ setOpen }) => {
             break;
         }
       },
-      (error) => {},
+      (error) => { },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setInputs((prev) => {
@@ -126,18 +126,18 @@ const Upload = ({ setOpen }) => {
   };
 
   useEffect(() => {
-    video && uploadFile(video , "videoUrl");
+    video && uploadFile(video, "videoUrl");
   }, [video]);
 
   useEffect(() => {
     img && uploadFile(img, "imgUrl");
   }, [img]);
 
-  const handleUpload = async (e)=>{
+  const handleUpload = async (e) => {
     e.preventDefault();
-    const res = await axios.post("/videos", {...inputs, tags})
+    const res = await axios.post("https://yt-api-production.up.railway.app/api/videos", { ...inputs, tags })
     setOpen(false)
-    res.status===200 && navigate(`/video/${res.data._id}`)
+    res.status === 200 && navigate(`/video/${res.data._id}`)
   }
 
   return (

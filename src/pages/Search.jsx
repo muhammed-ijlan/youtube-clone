@@ -16,15 +16,15 @@ const Search = () => {
 
   useEffect(() => {
     const fetchVideos = async () => {
-      const res = await axios.get(`/videos/search${query}`);
+      const res = await axios.get(`https://yt-api-production.up.railway.app/api/videos/search${query}`);
       setVideos(res.data);
     };
     fetchVideos();
   }, [query]);
 
   return <Container>
-    {videos.map(video=>(
-      <Card key={video._id} video={video}/>
+    {videos.map(video => (
+      <Card key={video._id} video={video} />
     ))}
   </Container>;
 };
