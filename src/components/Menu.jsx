@@ -94,10 +94,12 @@ const Menu = ({ darkMode, setDarkMode }) => {
             VidTube
           </Logo>
         </Link>
-        <Item>
-          <HomeIcon />
-          Home
-        </Item>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <Item>
+            <HomeIcon />
+            Home
+          </Item>
+        </Link>
         <Link to="trends" style={{ textDecoration: "none", color: "inherit" }}>
           <Item>
             <ExploreOutlinedIcon />
@@ -137,7 +139,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
             <Hr />
           </>
         }
-        <Title>BEST OF LAMATUBE</Title>
+        <Title>BEST OF VIDTUBE</Title>
         <Item>
           <LibraryMusicOutlinedIcon />
           Music

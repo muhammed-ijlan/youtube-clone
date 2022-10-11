@@ -132,9 +132,14 @@ const Video = () => {
         const channelRes = await axios.get(
           `https://yt-api-production.up.railway.app/api/users/find/${videoRes.data.userId}`
         );
+        console.log(videoRes);
         setChannel(channelRes.data);
-        dispatch(fetchSuccess(videoRes?.data));
-      } catch (err) { }
+
+        dispatch(fetchSuccess(videoRes.data));
+
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchData();
   }, [path, dispatch]);
@@ -155,31 +160,29 @@ const Video = () => {
     dispatch(subscription(channel._id));
   };
 
-  //TODO: DELETE VIDEO FUNCTIONALITY
-  console.log(currentVideo);
 
   return (
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame src={currentVideo?.videoUrl} controls />
+          <VideoFrame src={currentVideo !== null && currentVideo.videoUrl} controls />
         </VideoWrapper>
-        <Title>{currentVideo.title}</Title>
+        <Title>{currentVideo?.title}</Title>
         <Details>
           <Info>
-            {currentVideo.views} views • {format(currentVideo.createdAt)}
+            {currentVideo !== null && currentVideo.views} views • {format(currentVideo !== null && currentVideo.createdAt)}
           </Info>
           <Buttons>
             <Button onClick={handleLike}>
-              {currentVideo.likes?.includes(currentUser?._id) ? (
+              {currentVideo !== null && currentVideo.likes?.includes(currentUser?._id) ? (
                 <ThumbUpIcon />
               ) : (
                 <ThumbUpOutlinedIcon />
               )}{" "}
-              {currentVideo.likes?.length}
+              {currentVideo !== null && currentVideo.likes?.length}
             </Button>
             <Button onClick={handleDislike}>
-              {currentVideo.dislikes?.includes(currentUser?._id) ? (
+              {currentVideo !== null && currentVideo.dislikes?.includes(currentUser?._id) ? (
                 <ThumbDownIcon />
               ) : (
                 <ThumbDownOffAltOutlinedIcon />
@@ -201,7 +204,7 @@ const Video = () => {
             <ChannelDetail>
               <ChannelName>{channel.name}</ChannelName>
               <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
-              <Description>{currentVideo.desc}</Description>
+              <Description>{currentVideo !== null && currentVideo.desc}</Description>
             </ChannelDetail>
           </ChannelInfo>
           <Subscribe onClick={handleSub}>
@@ -211,9 +214,9 @@ const Video = () => {
           </Subscribe>
         </Channel>
         <Hr />
-        <Comments videoId={currentVideo._id} />
+        <Comments videoId={currentVideo !== null && currentVideo._id} />
       </Content>
-      <Recommendation tags={currentVideo.tags} />
+      <Recommendation tags={currentVideo !== null && currentVideo.tags} />
     </Container>
   );
 };
